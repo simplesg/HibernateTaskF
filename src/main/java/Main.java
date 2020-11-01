@@ -25,7 +25,7 @@ public class Main {
         Set<Role> roles = roleFactory();
         List<Task> tasks = taskFactory();
         List<Discipline> disciplineList = disciplines();
-        List<User> userList = userFactory(roles.stream().filter(it -> it.getName().equals("Intern")).collect(Collectors.toSet()), tasks, disciplineList.get(0));
+        List<User> userList = AmUserFactory(roles.stream().filter(it -> it.getName().equals("Intern")).collect(Collectors.toSet()), tasks, disciplineList.get(0));
 
         //ADDING INITIAL VALUES TO DATABASE
         for(Role role : roles){
@@ -46,22 +46,22 @@ public class Main {
         disciplineService.update(disciplineList.get(0));
 
         //Updating disciplines with users
-        disciplineList.get(1).setUsers(Arrays.asList(userFactory(
+        disciplineList.get(1).setUsers(Arrays.asList(TestUserFactory(
                 roles.stream().filter(it -> it.getName().equals("Employee") || it.getName().equals("Intern")).collect(Collectors.toSet())
                 , tasks, disciplineList.get(1)).get(1)));
         disciplineService.update(disciplineList.get(1));
 
-        disciplineList.get(2).setUsers(userFactory(
+        disciplineList.get(2).setUsers(DevUserFactory(
                 roles.stream().filter(it -> it.getName().equals("Employee") || it.getName().equals("Intern")).collect(Collectors.toSet())
                 , tasks, disciplineList.get(2)));
         disciplineService.update(disciplineList.get(2));
 
         //adding users for TEST HEAD and DEV Head
-        User TestHead = new User("Alex", "ciumbac", "alex@endava.com", "alexc", disciplineList.get(1), Collections.EMPTY_LIST
+        User TestHead = new User("Alex", "ciumbac", "alex@endava.com", "alexc",LocalDate.now().toString(),true, disciplineList.get(1), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
         userService.add(TestHead);
 
-        User DevHead = new User("Nick", "stropsa", "nick@endava.com", "nick", disciplineList.get(2), Collections.EMPTY_LIST
+        User DevHead = new User("Nick", "stropsa", "nick@endava.com", "nick",LocalDate.now().toString(),true, disciplineList.get(2), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
         userService.add(DevHead);
 
@@ -84,7 +84,7 @@ public class Main {
         printSeparator();
 //
         //List All Users from AM discipline
-        List<User> AmUsers = userService.getUsersByDiscipline(DisciplineType.DEV);
+        List<User> AmUsers = userService.getUsersByDiscipline(DisciplineType.AM);
         for (User user : AmUsers) {
             System.out.println(user);
             printSeparator();
@@ -101,7 +101,7 @@ public class Main {
         userService.closeTransactionSession();
 
 //        Changing the HEAD of DEV
-        User user = new User("eugen", "chirilov", "eugen@endava.com", "eugen", disciplineList.get(2), Collections.EMPTY_LIST
+        User user = new User("eugen", "chirilov", "eugen@endava.com", "eugen",LocalDate.now().toString(),true, disciplineList.get(2), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
         userService.add(user);
         Discipline DevDiscipline = disciplineService.getDiscipline(DisciplineType.DEV);
@@ -147,17 +147,49 @@ public class Main {
         return disciplines;
     }
 
-    private static List<User> userFactory(Set<Role> roleSet, List<Task> tasks, Discipline discipline) {
+    private static List<User> AmUserFactory(Set<Role> roleSet, List<Task> tasks, Discipline discipline) {
         List<User> users = new ArrayList<>();
-        users.add(new User("sorin", "gorea", "sgorea@endava.com", "sgorea",
+        users.add(new User("sorin", "gorea", "sgorea@endava.com", "sgorea", LocalDate.now().toString(),true,
                 discipline, Arrays.asList(tasks.get(0)), roleSet));
-        users.add(new User("andrei", "burns", "aburns@endava.com", "andrei",
+        users.add(new User("andrei", "burns", "vadim@endava.com", "andrei",LocalDate.now().toString(),true,
                 discipline, Arrays.asList(tasks.get(1)), roleSet));
-        users.add(new User("vlad", "timur", "vlad@endava.com", "vlad",
+        users.add(new User("vlad", "timur", "vlad@endava.com", "vlad",LocalDate.now().toString(),true,
                 discipline, Arrays.asList(tasks.get(2)), roleSet));
-        users.add(new User("vadim", "besn", "aburns@endava.com", "vaadim",
+        users.add(new User("vadim", "besn", "vaadim@endava.com", "vaadim",LocalDate.now().toString(),true,
                 discipline, Arrays.asList(tasks.get(3)), roleSet));
-        users.add(new User("victoria", "burns", "aburns@endava.com", "victoria",
+        users.add(new User("victoria", "burns", "vburns@endava.com", "victoria",LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(4)), roleSet));
+
+        return users;
+    }
+
+    private static List<User> TestUserFactory(Set<Role> roleSet, List<Task> tasks, Discipline discipline) {
+        List<User> users = new ArrayList<>();
+        users.add(new User("timur", "delimh", "tim@endava.com", "tim", LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(0)), roleSet));
+        users.add(new User("catea", "burns", "catea@endava.com", "catea",LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(1)), roleSet));
+        users.add(new User("vladislav", "timur", "vladislav@endava.com", "vladislav",LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(2)), roleSet));
+        users.add(new User("serghei", "besn", "serghei@endava.com", "serghei",LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(3)), roleSet));
+        users.add(new User("victorita", "burns", "vicburns@endava.com", "victorita",LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(4)), roleSet));
+
+        return users;
+    }
+
+    private static List<User> DevUserFactory(Set<Role> roleSet, List<Task> tasks, Discipline discipline) {
+        List<User> users = new ArrayList<>();
+        users.add(new User("valentina", "gorea", "valentina@endava.com", "valentinag", LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(0)), roleSet));
+        users.add(new User("nicolae", "burns", "nicolae@endava.com", "nicolaes",LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(1)), roleSet));
+        users.add(new User("vlad", "timur", "vladik@endava.com", "vladik",LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(2)), roleSet));
+        users.add(new User("petru", "besn", "petru@endava.com", "petru",LocalDate.now().toString(),true,
+                discipline, Arrays.asList(tasks.get(3)), roleSet));
+        users.add(new User("linda", "burns", "linda@endava.com", "linda",LocalDate.now().toString(),true,
                 discipline, Arrays.asList(tasks.get(4)), roleSet));
 
         return users;

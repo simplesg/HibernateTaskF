@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "T_USER")
-@SQLDelete(sql = "UPDATE T_USER SET name='DELETED',LAST_NAME = 'DELETED',E_MAIL = 'DELETED',USERNAME = 'DELETED' WHERE USER_ID =?")
+@SQLDelete(sql = "UPDATE T_USER SET name='DELETED',LAST_NAME = 'DELETED',E_MAIL = 'DELETED',USERNAME = 'DELETED',ENABLED = false WHERE USER_ID =?")
 public class User {
 
     @Id
@@ -23,11 +23,17 @@ public class User {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Column(name = "E_MAIL")
-    private String eMail;
+    @Column(name = "E_MAIL",unique = true)
+    private String email;
 
-    @Column(name = "USERNAME")
-    private String username;
+    @Column(name = "USERNAME",unique = true)
+    private String userName;
+
+    @Column(name = "CREATED")
+    private String createdAt;
+
+    @Column(name = "ENABLED")
+    private boolean enabled;
 
     @OneToOne(mappedBy = "headOfDiscipline")
     private Discipline headOfDiscipline;
@@ -48,14 +54,16 @@ public class User {
     @JoinColumn(name = "USER_ID")
     private List<Task> taskList;
 
-    public User(String name, String lastName, String eMail, String username, Discipline discipline, List<Task> tasks,Set<Role> roles) {
+    public User(String name, String lname, String email, String userName, String createdAt, boolean enabled, Discipline discipline, List<Task> taskList, Set<Role> roleSet) {
         this.name = name;
-        this.lastName = lastName;
-        this.eMail = eMail;
-        this.username = username;
+        this.lastName = lname;
+        this.email = email;
+        this.userName = userName;
+        this.createdAt = createdAt;
+        this.enabled = enabled;
         this.discipline = discipline;
-        this.roles = roles;
-        this.taskList = tasks;
+        this.roles = roleSet;
+        this.taskList = taskList;
     }
 
     public User() {
@@ -65,8 +73,8 @@ public class User {
     public User(String name, String lastName, String eMail, String username) {
         this.name = name;
         this.lastName = lastName;
-        this.eMail = eMail;
-        this.username = username;
+        this.email = eMail;
+        this.userName = username;
     }
 
     public String getName() {
@@ -94,19 +102,19 @@ public class User {
     }
 
     public String geteMail() {
-        return eMail;
+        return email;
     }
 
     public void seteMail(String eMail) {
-        this.eMail = eMail;
+        this.email = eMail;
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public List<Task> getTaskList() {
@@ -128,7 +136,7 @@ public class User {
     @Override
     public String toString() {
         return "User[ " + " fName: " + name + " lName: " + lastName +
-                " e-mail: " + eMail + " username:" + " discipline: " + discipline.getDisciplineType() +
+                " e-mail: " + email + " username:" + userName + " discipline: " + discipline.getDisciplineType() +
                 " roles: " + roles + " tasks: " + taskList;
     }
 }
