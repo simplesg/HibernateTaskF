@@ -2,7 +2,9 @@ package entity;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ROLE")
+@Data
 @NoArgsConstructor
 public class Role {
 
@@ -21,31 +24,14 @@ public class Role {
     @Column(name = "NAME")
     private String name;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
     private Set<User> userSet = new HashSet<>();
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<User> getUserSet() {
-        return userSet;
-    }
-
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
-    }
 
     public Role(String name) {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
 }

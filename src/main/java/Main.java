@@ -29,20 +29,20 @@ public class Main {
 
         //ADDING INITIAL VALUES TO DATABASE
         for(Role role : roles){
-            roleService.add(role);
+            roleService.addToDatabase(role);
         }
         for (Task task : tasks) {
-            taskService.add(task);
+            taskService.addToDatabase(task);
         }
         for (Discipline discipline : disciplineList) {
-            disciplineService.add(discipline);
+            disciplineService.addToDatabase(discipline);
         }
         for (User user : userList) {
-            userService.add(user);
+            userService.addToDatabase(user);
         }
 
         //Set THE AM HEAD
-        disciplineList.get(0).setUser(userList.get(0));
+        disciplineList.get(0).setHeadOfDiscipline(userList.get(0));
         disciplineService.update(disciplineList.get(0));
 
         //Updating disciplines with users
@@ -59,20 +59,20 @@ public class Main {
         //adding users for TEST HEAD and DEV Head
         User TestHead = new User("Alex", "ciumbac", "alex@endava.com", "alexc",LocalDate.now().toString(),true, disciplineList.get(1), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
-        userService.add(TestHead);
+        userService.addToDatabase(TestHead);
 
         User DevHead = new User("Nick", "stropsa", "nick@endava.com", "nick",LocalDate.now().toString(),true, disciplineList.get(2), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
-        userService.add(DevHead);
+        userService.addToDatabase(DevHead);
 
 
         //SET the Disciplines HEAD
-        disciplineList.get(1).setUser(TestHead);
-        disciplineList.get(2).setUser(DevHead);
+        disciplineList.get(1).setHeadOfDiscipline(TestHead);
+        disciplineList.get(2).setHeadOfDiscipline(DevHead);
         disciplineService.update(disciplineList.get(1));
         disciplineService.update(disciplineList.get(2));
-
         printSeparator();
+
         //List All Users with specific name
         List<User> list = userService.getUserByRole("Head");
         for (User user : list) {
@@ -103,13 +103,13 @@ public class Main {
 //        Changing the HEAD of DEV
         User user = new User("eugen", "chirilov", "eugen@endava.com", "eugen",LocalDate.now().toString(),true, disciplineList.get(2), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
-        userService.add(user);
+        userService.addToDatabase(user);
         Discipline DevDiscipline = disciplineService.getDiscipline(DisciplineType.DEV);
         System.out.println(DevDiscipline);
         disciplineService.closeTransactionSession();
         printSeparator();
 
-        DevDiscipline.setUser(user);
+        DevDiscipline.setHeadOfDiscipline(user);
         disciplineService.update(DevDiscipline);
         System.out.println(disciplineService.getDiscipline(DisciplineType.DEV));
         disciplineService.closeTransactionSession();

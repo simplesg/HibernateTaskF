@@ -12,7 +12,7 @@ import java.util.List;
 
 public class RoleService extends SessionUtil implements RoleDAO {
     @Override
-    public void add(Role role) throws SQLException {
+    public void addToDatabase(Role role) throws SQLException {
         //open session
         openTransactionSession();
 
@@ -24,7 +24,7 @@ public class RoleService extends SessionUtil implements RoleDAO {
     }
 
     @Override
-    public List<Role> getAll() throws SQLException {
+    public List<Role> getAllFromDatabase() throws SQLException {
         List<Role> userList;
         openTransactionSession();
 

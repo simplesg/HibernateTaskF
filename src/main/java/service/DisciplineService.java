@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DisciplineService extends SessionUtil implements DisciplineDAO {
     @Override
-    public void add(Discipline discipline) throws SQLException {
+    public void addToDatabase(Discipline discipline) throws SQLException {
         //open session
         openTransactionSession();
 
@@ -25,7 +25,7 @@ public class DisciplineService extends SessionUtil implements DisciplineDAO {
     }
 
     @Override
-    public List<Discipline> getAll() throws SQLException {
+    public List<Discipline> getAllFromDatabase() throws SQLException {
         return null;
     }
 

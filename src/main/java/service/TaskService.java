@@ -13,7 +13,7 @@ import java.util.List;
 public class TaskService extends SessionUtil implements TaskDAO {
 
     @Override
-    public void add(Task task) throws SQLException {
+    public void addToDatabase(Task task) throws SQLException {
         //open session
         openTransactionSession();
 
@@ -25,7 +25,7 @@ public class TaskService extends SessionUtil implements TaskDAO {
     }
 
     @Override
-    public List<Task> getAll() throws SQLException {
+    public List<Task> getAllFromDatabase() throws SQLException {
         List<Task> userList;
         openTransactionSession();
 

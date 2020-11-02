@@ -1,13 +1,15 @@
 package entity;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import entity.enums.Status;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "t_task")
+@NoArgsConstructor
+@Data
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +32,6 @@ public class Task {
     @Enumerated(value = EnumType.STRING)
     private Status status;
 
-    public Task() {
-    }
-
     public Task(String name, String description, String startDate, String dueDate, Status status) {
         this.name = name;
         this.description = description;
@@ -41,48 +40,5 @@ public class Task {
         this.status = status;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "[ " + "name:" + name + "dueDate: " + dueDate + "status: " + status + "]";
-    }
 }

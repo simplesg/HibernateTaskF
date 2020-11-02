@@ -1,5 +1,8 @@
 package entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -9,6 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "T_USER")
+@Data
+@NoArgsConstructor
 @SQLDelete(sql = "UPDATE T_USER SET name='DELETED',LAST_NAME = 'DELETED',E_MAIL = 'DELETED',USERNAME = 'DELETED',ENABLED = false WHERE USER_ID =?")
 public class User {
 
@@ -35,9 +40,7 @@ public class User {
     @Column(name = "ENABLED")
     private boolean enabled;
 
-    @OneToOne(mappedBy = "headOfDiscipline")
-    private Discipline headOfDiscipline;
-
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private Discipline discipline;
 
@@ -66,10 +69,6 @@ public class User {
         this.taskList = taskList;
     }
 
-    public User() {
-
-    }
-
     public User(String name, String lastName, String eMail, String username) {
         this.name = name;
         this.lastName = lastName;
@@ -77,66 +76,4 @@ public class User {
         this.userName = username;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String geteMail() {
-        return email;
-    }
-
-    public void seteMail(String eMail) {
-        this.email = eMail;
-    }
-
-    public String getUsername() {
-        return userName;
-    }
-
-    public void setUsername(String username) {
-        this.userName = username;
-    }
-
-    public List<Task> getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
-    }
-
-    public Discipline getDiscipline() {
-        return discipline;
-    }
-
-    public void setDiscipline(Discipline discipline) {
-        this.discipline = discipline;
-    }
-
-    @Override
-    public String toString() {
-        return "User[ " + " fName: " + name + " lName: " + lastName +
-                " e-mail: " + email + " username:" + userName + " discipline: " + discipline.getDisciplineType() +
-                " roles: " + roles + " tasks: " + taskList;
-    }
 }

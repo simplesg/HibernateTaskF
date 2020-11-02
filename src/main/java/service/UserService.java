@@ -17,7 +17,7 @@ import java.util.List;
 public class UserService extends SessionUtil implements UserDAO {
 
     @Override
-    public void add(User user) throws SQLException {
+    public void addToDatabase(User user) throws SQLException {
         //open session with a transaction
         openTransactionSession();
 
@@ -29,7 +29,7 @@ public class UserService extends SessionUtil implements UserDAO {
     }
 
     @Override
-    public List<User> getAll() throws SQLException {
+    public List<User> getAllFromDatabase() throws SQLException {
         //open session
         List<User> userList;
         openTransactionSession();

@@ -1,5 +1,6 @@
 package dao;
 
+import entity.Role;
 import entity.User;
 import entity.enums.DisciplineType;
 import entity.enums.Status;
@@ -7,15 +8,7 @@ import entity.enums.Status;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface UserDAO {
-
-    void add(User user) throws SQLException;
-
-    List<User> getAll() throws SQLException;
-
-    void update(User user) throws SQLException;
-
-    void delete(User user) throws SQLException;
+public interface UserDAO extends RepositoryDao<User>{
 
     List<User> getUserByRole(String role) throws SQLException;
 
