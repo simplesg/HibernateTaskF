@@ -7,6 +7,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ public class User {
     private String userName;
 
     @Column(name = "CREATED")
-    private String createdAt;
+    private Date createdAt;
 
     @Column(name = "ENABLED")
     private boolean enabled;
@@ -57,7 +58,7 @@ public class User {
     @JoinColumn(name = "USER_ID")
     private List<Task> taskList;
 
-    public User(String name, String lname, String email, String userName, String createdAt, boolean enabled, Discipline discipline, List<Task> taskList, Set<Role> roleSet) {
+    public User(String name, String lname, String email, String userName, Date createdAt, boolean enabled, Discipline discipline, List<Task> taskList, Set<Role> roleSet) {
         this.name = name;
         this.lastName = lname;
         this.email = email;
@@ -67,13 +68,6 @@ public class User {
         this.discipline = discipline;
         this.roles = roleSet;
         this.taskList = taskList;
-    }
-
-    public User(String name, String lastName, String eMail, String username) {
-        this.name = name;
-        this.lastName = lastName;
-        this.email = eMail;
-        this.userName = username;
     }
 
 }

@@ -10,6 +10,7 @@ import service.TaskService;
 import service.UserService;
 import utils.HibernateUtils;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
@@ -57,11 +58,11 @@ public class Main {
         disciplineService.update(disciplineList.get(2));
 
         //adding users for TEST HEAD and DEV Head
-        User TestHead = new User("Alex", "ciumbac", "alex@endava.com", "alexc",LocalDate.now().toString(),true, disciplineList.get(1), Collections.EMPTY_LIST
+        User TestHead = new User("Alex", "ciumbac", "alex@endava.com", "alexc", Date.valueOf(LocalDate.now()),true, disciplineList.get(1), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
         userService.addToDatabase(TestHead);
 
-        User DevHead = new User("Nick", "stropsa", "nick@endava.com", "nick",LocalDate.now().toString(),true, disciplineList.get(2), Collections.EMPTY_LIST
+        User DevHead = new User("Nick", "stropsa", "nick@endava.com", "nick",Date.valueOf(LocalDate.now()),true, disciplineList.get(2), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
         userService.addToDatabase(DevHead);
 
@@ -90,6 +91,9 @@ public class Main {
             printSeparator();
         }
         userService.closeTransactionSession();
+        Discipline discipline = disciplineService.getDiscipline(DisciplineType.AM);
+        System.out.println(discipline);
+        disciplineService.closeTransactionSession();
         printSeparator();
 
         //List All Users with Task StatusTODO
@@ -101,7 +105,7 @@ public class Main {
         userService.closeTransactionSession();
 
 //        Changing the HEAD of DEV
-        User user = new User("eugen", "chirilov", "eugen@endava.com", "eugen",LocalDate.now().toString(),true, disciplineList.get(2), Collections.EMPTY_LIST
+        User user = new User("eugen", "chirilov", "eugen@endava.com", "eugen",Date.valueOf(LocalDate.now()),true, disciplineList.get(2), Collections.EMPTY_LIST
                 , roles.stream().filter(it -> it.getName().equals("Head")).collect(Collectors.toSet()));
         userService.addToDatabase(user);
         Discipline DevDiscipline = disciplineService.getDiscipline(DisciplineType.DEV);
@@ -149,15 +153,15 @@ public class Main {
 
     private static List<User> AmUserFactory(Set<Role> roleSet, List<Task> tasks, Discipline discipline) {
         List<User> users = new ArrayList<>();
-        users.add(new User("sorin", "gorea", "sgorea@endava.com", "sgorea", LocalDate.now().toString(),true,
+        users.add(new User("sorin", "gorea", "sgorea@endava.com", "sgorea", Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(0)), roleSet));
-        users.add(new User("andrei", "burns", "vadim@endava.com", "andrei",LocalDate.now().toString(),true,
+        users.add(new User("andrei", "burns", "vadim@endava.com", "andrei",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(1)), roleSet));
-        users.add(new User("vlad", "timur", "vlad@endava.com", "vlad",LocalDate.now().toString(),true,
+        users.add(new User("vlad", "timur", "vlad@endava.com", "vlad",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(2)), roleSet));
-        users.add(new User("vadim", "besn", "vaadim@endava.com", "vaadim",LocalDate.now().toString(),true,
+        users.add(new User("vadim", "besn", "vaadim@endava.com", "vaadim",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(3)), roleSet));
-        users.add(new User("victoria", "burns", "vburns@endava.com", "victoria",LocalDate.now().toString(),true,
+        users.add(new User("victoria", "burns", "vburns@endava.com", "victoria",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(4)), roleSet));
 
         return users;
@@ -165,15 +169,15 @@ public class Main {
 
     private static List<User> TestUserFactory(Set<Role> roleSet, List<Task> tasks, Discipline discipline) {
         List<User> users = new ArrayList<>();
-        users.add(new User("timur", "delimh", "tim@endava.com", "tim", LocalDate.now().toString(),true,
+        users.add(new User("timur", "delimh", "tim@endava.com", "tim", Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(0)), roleSet));
-        users.add(new User("catea", "burns", "catea@endava.com", "catea",LocalDate.now().toString(),true,
+        users.add(new User("catea", "burns", "catea@endava.com", "catea",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(1)), roleSet));
-        users.add(new User("vladislav", "timur", "vladislav@endava.com", "vladislav",LocalDate.now().toString(),true,
+        users.add(new User("vladislav", "timur", "vladislav@endava.com", "vladislav",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(2)), roleSet));
-        users.add(new User("serghei", "besn", "serghei@endava.com", "serghei",LocalDate.now().toString(),true,
+        users.add(new User("serghei", "besn", "serghei@endava.com", "serghei",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(3)), roleSet));
-        users.add(new User("victorita", "burns", "vicburns@endava.com", "victorita",LocalDate.now().toString(),true,
+        users.add(new User("victorita", "burns", "vicburns@endava.com", "victorita",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(4)), roleSet));
 
         return users;
@@ -181,26 +185,26 @@ public class Main {
 
     private static List<User> DevUserFactory(Set<Role> roleSet, List<Task> tasks, Discipline discipline) {
         List<User> users = new ArrayList<>();
-        users.add(new User("valentina", "gorea", "valentina@endava.com", "valentinag", LocalDate.now().toString(),true,
+        users.add(new User("valentina", "gorea", "valentina@endava.com", "valentinag", Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(0)), roleSet));
-        users.add(new User("nicolae", "burns", "nicolae@endava.com", "nicolaes",LocalDate.now().toString(),true,
+        users.add(new User("nicolae", "burns", "nicolae@endava.com", "nicolaes",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(1)), roleSet));
-        users.add(new User("vlad", "timur", "vladik@endava.com", "vladik",LocalDate.now().toString(),true,
+        users.add(new User("vlad", "timur", "vladik@endava.com", "vladik",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(2)), roleSet));
-        users.add(new User("petru", "besn", "petru@endava.com", "petru",LocalDate.now().toString(),true,
+        users.add(new User("petru", "besn", "petru@endava.com", "petru",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(3)), roleSet));
-        users.add(new User("linda", "burns", "linda@endava.com", "linda",LocalDate.now().toString(),true,
+        users.add(new User("linda", "burns", "linda@endava.com", "linda",Date.valueOf(LocalDate.now()),true,
                 discipline, Arrays.asList(tasks.get(4)), roleSet));
 
         return users;
     }
 
     public static List<Task> taskFactory() {
-        return Arrays.asList(new Task("Java core", "java core exercises", LocalDate.of(2020, 10, 25).toString(), LocalDate.now().toString(), Status.DONE),
-                new Task("Java Stream", "java stream exercises", LocalDate.of(2020, 10, 25).toString(), LocalDate.now().toString(), Status.TODO),
-                new Task("Java core", "java core exercises", LocalDate.of(2020, 10, 25).toString(), LocalDate.now().toString(), Status.TODO),
-                new Task("Hibernate", "hibernate core exercises", LocalDate.of(2020, 10, 25).toString(), LocalDate.now().toString(), Status.PROGRESS),
-                new Task("Spring Core", "spring core exercises", LocalDate.of(2020, 10, 25).toString(), LocalDate.now().toString(), Status.PROGRESS));
+        return Arrays.asList(new Task("Java core", "java core exercises", Date.valueOf(LocalDate.of(2020, 10, 25)), Date.valueOf(LocalDate.now()), Status.DONE),
+                new Task("Java Stream", "java stream exercises", Date.valueOf(LocalDate.of(2020, 10, 25)), Date.valueOf(LocalDate.now()), Status.TODO),
+                new Task("Java core", "java core exercises", Date.valueOf(LocalDate.of(2020, 10, 25)), Date.valueOf(LocalDate.now()), Status.TODO),
+                new Task("Hibernate", "hibernate core exercises", Date.valueOf(LocalDate.of(2020, 10, 25)), Date.valueOf(LocalDate.now()), Status.PROGRESS),
+                new Task("Spring Core", "spring core exercises",Date.valueOf(LocalDate.of(2020, 10, 25)), Date.valueOf(LocalDate.now()), Status.PROGRESS));
 
     }
 

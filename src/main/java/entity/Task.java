@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "t_task")
@@ -23,16 +24,16 @@ public class Task {
     private String description;
 
     @Column(name = "startDate")
-    private String startDate;
+    private Date startDate;
 
     @Column(name = "dueDate")
-    private String dueDate;
+    private Date dueDate;
 
     @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
     private Status status;
 
-    public Task(String name, String description, String startDate, String dueDate, Status status) {
+    public Task(String name, String description, Date startDate, Date dueDate, Status status) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
